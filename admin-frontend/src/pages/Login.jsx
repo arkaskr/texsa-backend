@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api/api';
 import { Lock, Mail, Loader2, Eye, EyeOff } from 'lucide-react';
 
-const api = axios.create({
-  baseURL: 'http://localhost:5001/api',
-});
+
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');

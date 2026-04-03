@@ -9,19 +9,9 @@ import {
   CheckCircle2, Clock, Calendar, ArrowUpRight, 
   ArrowDownRight, RefreshCw, Filter
 } from 'lucide-react';
-import axios from 'axios';
+import api from '../api/api';
 
-const api = axios.create({
-  baseURL: 'http://localhost:5001/api',
-});
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('adminToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
 
 const Analysis = () => {
   const [data, setData] = useState(null);

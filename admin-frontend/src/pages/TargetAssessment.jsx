@@ -1,18 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Target, Users, Calendar, ArrowUpRight, CheckCircle2, AlertCircle, Save, User as UserIcon, Coins, PenTool as Tool } from 'lucide-react';
-import axios from 'axios';
+import api from '../api/api';
 
-const api = axios.create({
-  baseURL: 'http://localhost:5001/api',
-});
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('adminToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
 
 const TargetAssessment = () => {
   const [employees, setEmployees] = useState([]);

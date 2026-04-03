@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/api';
 import * as XLSX from 'xlsx';
 import { Download, Users, Calendar, Loader2, AlertCircle } from 'lucide-react';
 
@@ -19,11 +19,7 @@ const EmployeeReports = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const token = localStorage.getItem('adminToken');
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
-        const response = await axios.get(`${apiUrl}/api/auth/users`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await api.get(`/auth/users`);
         const staff = response.data.filter(u => u.role === 'SALES_EMPLOYEE' || u.role === 'SERVICE_EMPLOYEE');
         setEmployees(staff);
       } catch (err) {
@@ -48,11 +44,7 @@ const EmployeeReports = () => {
     setError(null);
     setGenerating(true);
     try {
-      const token = localStorage.getItem('adminToken');
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
-      const response = await axios.get(`${apiUrl}/api/analytics/employee-report/${selectedEmployee}?month=${selectedMonth}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/analytics/employee-report/${selectedEmployee}?month=${selectedMonth}`);
       setReportData(response.data);
     } catch (err) {
       setError(err.response?.data?.message || err.message || "Failed to generate report");
