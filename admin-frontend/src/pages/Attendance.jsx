@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Search, User, Clock, ExternalLink } from 'lucide-react';
-import api from '../api/api';
+import axios from 'axios';
 
+const api = axios.create({
+  baseURL: 'http://localhost:5001/api',
+});
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const Attendance = () => {
   const [logs, setLogs] = useState([]);

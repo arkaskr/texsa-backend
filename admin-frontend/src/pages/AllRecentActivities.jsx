@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../api/api';
+import axios from 'axios';
 import { 
     Clock, 
     UserPlus, 
@@ -12,7 +12,17 @@ import {
     Calendar
 } from 'lucide-react';
 
+const api = axios.create({
+  baseURL: 'http://localhost:5001/api',
+});
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const formatTimeAgo = (dateString) => {
     if (!dateString) return 'JUST NOW';

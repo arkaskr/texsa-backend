@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Package, Search, Plus, Filter, Edit2, Trash2, Tag, Box, ArrowDownLeft, X, IndianRupee, Hash, ListOrdered, ShoppingCart, User, Calendar, MapPin, Phone } from 'lucide-react';
-import api from '../api/api';
+import axios from 'axios';
 
+const api = axios.create({
+  baseURL: 'http://localhost:5001/api',
+});
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const Inventory = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);

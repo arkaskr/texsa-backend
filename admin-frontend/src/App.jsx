@@ -27,14 +27,6 @@ const App = () => {
   }, [activeTab]);
 
   useEffect(() => {
-    // 1. Session Sync Check: Ensure both user profile and token exist synchronously
-    const token = localStorage.getItem('adminToken');
-    if (user && !token) {
-      handleLogout(); // Force logout if token is missing but user state is present
-    }
-  }, [user]);
-
-  useEffect(() => {
     const handleTabChange = (e) => {
       setActiveTab(e.detail);
     };

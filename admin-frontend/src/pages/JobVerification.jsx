@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../api/api';
+import axios from 'axios';
 
 const JobVerification = () => {
   const [requests, setRequests] = useState([]);
@@ -12,7 +12,11 @@ const JobVerification = () => {
   const fetchUnderReviewRequests = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/service-requests`);
+      const token = localStorage.getItem('adminToken');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+      const response = await axios.get(`${apiUrl}/api/service-requests`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       // Filter for 'Under Review' and history
       setRequests(response.data.filter(req => req.status === 'Under Review'));
       setHistoryRequests(response.data.filter(req => req.status === 'Completed' || req.status === 'Failed'));
@@ -32,7 +36,12 @@ const JobVerification = () => {
     if (!window.confirm(`Are you sure you want to ${action} this job?`)) return;
     
     try {
-      await api.put(`/service-requests/${id}/verify`, { status });
+      const token = localStorage.getItem('adminToken');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+      await axios.put(`${apiUrl}/api/service-requests/${id}/verify`, 
+        { status },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       // Refresh list
       fetchUnderReviewRequests();
     } catch (err) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import api from '../api/api';
+import axios from 'axios';
 import StatCard from '../components/StatCard';
 import RecentActivity from '../components/RecentActivity';
 import SalesActivity from '../components/SalesActivity';
@@ -11,7 +11,17 @@ import {
     AlertCircle
 } from 'lucide-react';
 
+const api = axios.create({
+  baseURL: 'http://localhost:5001/api',
+});
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const Dashboard = () => {
     const [statsData, setStatsData] = React.useState(null);

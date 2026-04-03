@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Search, Filter, Tag, User, Calendar, IndianRupee, Hash, Package, ExternalLink } from 'lucide-react';
-import api from '../api/api';
+import axios from 'axios';
 
+const api = axios.create({
+  baseURL: 'http://localhost:5001/api',
+});
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const SoldProducts = () => {
     const [loading, setLoading] = useState(false);

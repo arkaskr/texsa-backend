@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Package, Clock, CheckCircle, XCircle, ChevronRight, User, Calendar, IndianRupee, Tag, AlertCircle, Filter, Search, MoreVertical, ArrowUpRight, Truck, AlertTriangle } from 'lucide-react';
-import api from '../api/api';
+import axios from 'axios';
 
+const api = axios.create({
+  baseURL: 'http://localhost:5001/api',
+});
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const InventoryRequests = () => {
     const [requests, setRequests] = useState([]);
