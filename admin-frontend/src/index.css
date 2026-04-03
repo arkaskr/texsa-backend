@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --font-inter: "Inter", system-ui, -apple-system, sans-serif;
+    --font-outfit: "Outfit", sans-serif;
+    --color-brand: #FF6600;
+}
+
+:root {
+    --brand: #FF6600;
+    --bg-main: #f8fafc;
+    --bg-sidebar: #ffffff;
+    --bg-card: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --border: #e2e8f0;
+}
+
+body {
+    font-family: var(--font-inter);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+}
+
+.selection\:bg-orange-500\/30 ::selection {
+    background-color: rgba(249, 115, 22, 0.3);
+}
