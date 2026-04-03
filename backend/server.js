@@ -32,9 +32,13 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
+module.exports = app;
 
 app.use('/api/auth', authRoutes);
 app.use('/api/inventory', productRoutes);
