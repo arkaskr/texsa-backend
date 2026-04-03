@@ -16,9 +16,13 @@ const leaveRoutes = require('./routes/leaveRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
 
 
-connectDB();
-
 const app = express();
+
+// Middleware to ensure DB connection is ready for each request (cached in db.js)
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 
 const corsOptions = {
   origin: [

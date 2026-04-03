@@ -11,17 +11,7 @@ import {
     AlertCircle
 } from 'lucide-react';
 
-const api = axios.create({
-  baseURL: 'http://localhost:5001/api',
-});
-
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('adminToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+import api from '../api/api';
 
 const Dashboard = () => {
     const [statsData, setStatsData] = React.useState(null);
